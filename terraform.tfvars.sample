@@ -1,0 +1,24 @@
+# ------------------------------------------------------------------------------------------------------
+# Account settings
+# ------------------------------------------------------------------------------------------------------
+# Your global account subdomain
+globalaccount = "youraccount-ga"
+username      = "example@mail.de"
+password      = "YourPassword"
+
+project_name       = "test"
+subaccount_stage   = "DEV"
+subaccount_region  = "us10"
+cf_landscape_label = "dev"
+project_costcenter = "666"
+
+# ------------------------------------------------------------------------------------------------------
+# Use case specific role assignments
+# ------------------------------------------------------------------------------------------------------
+
+subaccount_emergency_admins = ["example@mail.de"]
+subaccount_admins           = ["example@mail.de"]
+launchpad_admins            = ["example@mail.de"]
+
+subaccount_developers = ["example@mail.de"]
+
