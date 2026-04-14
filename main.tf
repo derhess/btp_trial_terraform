@@ -28,7 +28,7 @@ module "subaccount" {
 # Identity Authentication and Authorization
 # ------------------------------------------------------------------------------------------------------
 # Step 2
-/* module "identity" {
+module "identity" {
   source = "./modules/sec_identity"
 
   subaccount_id = module.subaccount.subaccount_id
@@ -38,8 +38,7 @@ module "subaccount" {
 
   depends_on = [module.subaccount]
 }
-*/
-/*
+
 
 # ------------------------------------------------------------------------------------------------------
 # Database Services - Persistent Storage
@@ -56,26 +55,26 @@ module "hana_db" {
 
   depends_on        = [module.identity]
 }
-/*
+
 module "postgresql_db" {
   source            = "./modules/db_postgresql"
   subaccount_id     = module.subaccount.subaccount_id
   
   project_name      = var.project_name
   project_stage     = var.subaccount_stage
+  cf_space_id       = module.cloud_foundry.cf_space_id 
   
   admins            = var.subaccount_admins
 
-  depends_on        = [module.identity]
-}*/
-
+  depends_on        = [module.identity, module.cloud_foundry]
+}
 
 
 # ------------------------------------------------------------------------------------------------------
 # Runtime Environments
 # ------------------------------------------------------------------------------------------------------
 # STEP 2
-/*
+
 module "cloud_foundry" {
   source            = "./modules/runtime_cf"
 
@@ -92,7 +91,7 @@ module "cloud_foundry" {
 
   depends_on        = [module.identity]
 }
-
+/*
 module "abap_cloud" {
   source            = "./modules/runtime_abap"
 
@@ -114,11 +113,12 @@ module "application_frontend_service" {
 }*/
 
 # Workflow Engine
-/*
+
 module "process_automation" {
   source            = "./modules/dev_process_auto"
 
   subaccount_id     = module.subaccount.subaccount_id
+  cf_space_id       = module.cloud_foundry.cf_space_id
 
   process_automation_admins = var.subaccount_admins
   process_automation_delegates = var.subaccount_admins
@@ -128,13 +128,30 @@ module "process_automation" {
 
   depends_on        = [module.cloud_foundry]
 }
-*/
+
+
+
+# ------------------------------------------------------------------------------------------------------
+# BTP Security Services with relation to runtime environments
+# ------------------------------------------------------------------------------------------------------
+module  "sec_xsuaa" {
+  source            = "./modules/sec_xsuaa"
+
+  subaccount_id     = module.subaccount.subaccount_id
+
+  project_name      = var.project_name
+  project_stage     = var.subaccount_stage
+
+  cf_space_id       = module.cloud_foundry.cf_space_id
+
+  depends_on        = [module.subaccount]
+}
 
 # ------------------------------------------------------------------------------------------------------
 # E2E - SasS Services
 # ------------------------------------------------------------------------------------------------------
 # Step 2
-/*
+
 module "workzone" {
   source            = "./modules/workzone"
   subaccount_id     = module.subaccount.subaccount_id
@@ -146,12 +163,11 @@ module "workzone" {
 
   depends_on        = [module.identity]
 }
-*/
+
 # ------------------------------------------------------------------------------------------------------
 # Software Development - Build and Deploy Services
 # ------------------------------------------------------------------------------------------------------
 /* STEP 3 */
-/*
 module "application_studio" {
   source            = "./modules/dev_bas"
 
@@ -205,13 +221,11 @@ module "dev_saas" {
   depends_on        = [module.cloud_foundry]
 }
 
-*/
 
 # ------------------------------------------------------------------------------------------------------
 # Infrastructure Services - Automation Pilot, Monitoring, Alerting, Logging, etc.
 # ------------------------------------------------------------------------------------------------------
 #Step 4
-/*
 module "infra_mobile" {
   source            = "./modules/infra_mobile"
 
@@ -225,6 +239,7 @@ module "infra_saas" {
   source            = "./modules/infra_services"
 
   subaccount_id     = module.subaccount.subaccount_id
+  cf_space_id       = module.cloud_foundry.cf_space_id
 
   project_name      = var.project_name
   project_stage     = var.subaccount_stage
@@ -233,4 +248,4 @@ module "infra_saas" {
   developers        = var.subaccount_developers
   
   depends_on        = [module.cloud_foundry]
-}*/
+}

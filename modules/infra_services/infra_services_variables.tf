@@ -25,6 +25,14 @@ variable "project_stage" {
     error_message = "Stage must be one of DEV, TEST or PROD"
   }
 }
+# ------------------------------------------------------------------------------------------------------
+# Cloud Foundry Runtime - specific variables
+# ------------------------------------------------------------------------------------------------------
+# Cloud Foundry Runtime
+variable "cf_space_id" {
+  description = "The Cloud Foundry space ID"
+  type        = string
+}
 
 # ------------------------------------------------------------------------------------------------------
 # User lists

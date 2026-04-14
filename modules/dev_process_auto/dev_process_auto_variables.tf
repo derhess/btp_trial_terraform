@@ -12,6 +12,14 @@ variable "custom_idp" {
   type        = string
   default     = "sap.custom"
 }
+# ------------------------------------------------------------------------------------------------------
+# Cloud Foundry Runtime - specific variables
+# ------------------------------------------------------------------------------------------------------
+# Cloud Foundry Runtime
+variable "cf_space_id" {
+  description = "The Cloud Foundry space ID"
+  type        = string
+}
 
 # ------------------------------------------------------------------------------------------------------
 # User lists

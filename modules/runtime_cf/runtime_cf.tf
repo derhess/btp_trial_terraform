@@ -28,6 +28,9 @@ locals {
   service_name__cloudfoundry_plan = "trial"
   service_name__destination       = "destination"
 
+  #Memory in MB for the CF Runtime environment instance
+  resources__runtime_memory = 1024
+
   origin_key = data.btp_whoami.me.issuer != var.custom_idp ? "sap.default" : var.custom_idp
 }
 
@@ -45,6 +48,8 @@ resource "btp_subaccount_entitlement" "destination" {
 
 # ------------------------------------------------------------------------------------------------------
 # Setup APPLICATION_RUNTIME (Cloud Foundry Runtime)
+# 
+# see also https://github.com/btp-automation-scenarios/useful-samples/tree/main/cf-environment-instance-memory
 # ------------------------------------------------------------------------------------------------------
 # Entitle
 resource "btp_subaccount_entitlement" "cf_application_runtime" {
@@ -61,7 +66,7 @@ resource "btp_subaccount_entitlement" "cf_application_memory" {
   subaccount_id = var.subaccount_id
   service_name  = "APPLICATION_RUNTIME"
   plan_name     = "MEMORY"
-  amount        = 1
+  amount        = 2
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -89,7 +94,7 @@ resource "btp_subaccount_environment_instance" "cf" {
   parameters = jsonencode({
     instance_name = local.project_subaccount_cf_org
     landscapeLabel = "cf-us10-001"
-    memory = 1024
+    memory = local.resources__runtime_memory
     users = [{
       email = "florianweil@gmx.de"
     }]

@@ -97,7 +97,32 @@ output "feature_flags_dashboard_url" {
   value       = module.dev_saas.feature_flags_dashboard_url
   description = "The URL of the Feature Flags dashboard."
 }
+*/
+output "cloud_transport_management_dashboard_url" {
+  value       = module.infra_saas.cloud_transport_management_dashboard_url
+  description = "The URL of the Cloud Transport Management dashboard."
+}
 
+output "content_agent_dashboard_url" {
+  value       = module.infra_saas.content_agent_dashboard_url
+  description = "The URL of the Content Agent dashboard."
+}
+
+output "credential_store_dashboard_url" {
+  value       = module.infra_saas.credential_store_dashboard_url
+  description = "The URL of the Credential Store dashboard."
+}
+
+output "application_logging_dashboard_url" {
+  value       = module.dev_saas.application_logging_dashboard_url
+  description = "The URL of the Application Logging dashboard."
+}
+
+output "application_autoscaler_dashboard_url" {
+  value       = module.dev_saas.application_autoscaler_dashboard_url
+  description = "The URL of the Application Autoscaler dashboard."
+}
+/*
 output "automation_pilot_dashboard_url" {
   value       = module.infra_saas.automation_pilot_dashboard_url
   description = "The URL of the Automation Pilot dashboard."

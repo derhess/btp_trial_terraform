@@ -21,8 +21,8 @@ locals {
 # Mobile Services (CROSS-PLATFORM Service) depends on Cloud Foundry Runtime 
 # ------------------------------------------------------------------------------------------------------
 
-#TODO Subaccount entitlement XSUAA service for mobile services with "application" plan
-
+# Requirements for Mobile Services
+# - XSUAA Service Instance for API Access (planname = apiaccess)
 
 # Entitle
 resource "btp_subaccount_entitlement" "mobile_services" {
